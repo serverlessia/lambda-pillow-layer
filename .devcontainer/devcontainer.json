@@ -1,0 +1,47 @@
+{
+  "name": "Pillow Lambda Layer Builder",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.13"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
+        "ms-toolsai.jupyter",
+        "redhat.vscode-yaml",
+        "ms-vscode.makefile-tools"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black",
+        "python.testing.pytestEnabled": true,
+        "files.exclude": {
+          "**/build": true,
+          "**/__pycache__": true,
+          "**/*.pyc": true
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "apt-get update && apt-get install -y python3.9 python3.9-dev python3.10 python3.10-dev python3.11 python3.11-dev python3.12 python3.12-dev && chmod +x scripts/*.sh && ./scripts/build-multi-version.sh && ./scripts/test-multi-version.sh",
+
+  "postStartCommand": "echo 'Pillow Lambda Layer Builder ready! Layer built and tested successfully.'",
+
+  "remoteUser": "root",
+
+  "runArgs": [
+    "--init"
+  ]
+}
